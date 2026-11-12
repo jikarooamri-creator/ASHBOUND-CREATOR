@@ -1,0 +1,38 @@
+name: Extract Creator Project
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Extract project
+        run: |
+          mkdir -p /tmp/creator
+          unzip -q ASHBOUND-CREATOR-v0.1.0.zip -d /tmp/creator
+
+          PROJECT_DIR=$(dirname "$(find /tmp/creator -name package.json -print -quit)")
+
+          if [ -z "$PROJECT_DIR" ]; then
+            echo "package.json not found"
+            exit 1
+          fi
+
+          cp -R "$PROJECT_DIR"/. .
+          rm ASHBOUND-CREATOR-v0.1.0.zip
+
+      - name: Save extracted files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Extract ASHBOUND CREATOR project" || echo "No changes"
+          git push
