@@ -1,0 +1,12 @@
+{
+  "name": "ASHBOUND CREATOR",
+  "short_name": "Creator",
+  "description": "Mobile-first 2D game creation environment",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "landscape",
+  "background_color": "#090a10",
+  "theme_color": "#090a10",
+  "icons": []
+}
