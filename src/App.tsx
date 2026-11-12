@@ -1,3 +1,4 @@
+
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { FormEvent } from 'react';
 import {
@@ -10,7 +11,7 @@ import { createProject } from './core/project';
 import { addAsset, deleteAsset, listAssets, listProjects, removeProject, saveProject } from './core/storage';
 import { exportProject, importProject } from './core/projectFile';
 
-const modules: { id: WorkspaceId; title: string; group: string; icon: typeof Box; status: 'ready' | 'planned'; description: string }[] = [
+const modules: { id: WorkspaceId; title: string; group: string; icon: typeof Compass; status: 'ready' | 'planned'; description: string }[] = [
   { id: 'overview', title: 'Project Overview', group: 'PROJECT', icon: Compass, status: 'ready', description: 'Project identity, settings and production status.' },
   { id: 'characters', title: 'Character Studio', group: 'CREATE', icon: Shield, status: 'planned', description: 'Build characters, parts, rigs, attributes and combat roles.' },
   { id: 'sprites', title: 'Sprite Workshop', group: 'CREATE', icon: Image, status: 'planned', description: 'Draw, import, organize and edit pixel-art assets.' },
@@ -74,12 +75,6 @@ export default function App() {
     setShowCreate(false);
     await openProject(project);
     setNotice('Project created and saved on this device.');
-  }
-
-  async function persist(next: CreatorProject) {
-    await saveProject(next);
-    setActive(next);
-    setProjects((old) => old.map((p) => p.id === next.id ? next : p));
   }
 
   async function addFiles(files: FileList | null) {
